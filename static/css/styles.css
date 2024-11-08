@@ -1,0 +1,62 @@
+/* Keep body styling simple */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa; /* Soft background color for the page */
+    color: #333;
+    background-image: url("../images/w_img.jpg"); /* Full background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Container for weather info */
+.weather-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.85); /* Light translucent white */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Title Styling */
+.weather-container h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Temperature styling */
+.weather-info {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #FF4500; /* Orange color for contrast */
+    margin: 20px 0;
+}
+
+/* Weather detail styling */
+.weather-detail {
+    font-size: 1.2rem;
+    color: #333;
+    background: rgba(255, 248, 240, 0.9); /* Soft beige tone with opacity */
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.weather-detail img {
+    width: 80px;
+    margin: 10px 0;
+}
+
+.weather-footer {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1rem;
+    margin-top: 15px;
+    color: #555;
+}

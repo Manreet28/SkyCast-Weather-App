@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyCast Weather</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="weather-container">
+        <h1>SkyCast Weather</h1>
+        <form method="post">
+            <input type="text" name="city" placeholder="Enter city name">
+            <button type="submit">Search</button>
+        </form>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        {% if weather %}
+            <div class="weather-info">{{ weather.temp }}°C</div>
+            <div class="weather-detail">
+                <img class="weather-icon" src="{{ weather.icon_url }}" alt="Weather Icon">
+                <p>{{ weather.city }} - {{ weather.description }}</p>
+                <p>Feels like: {{ weather.feels_like }}°C</p>
+                <p>Humidity: {{ weather.humidity }}%</p>
+            </div>
+            <div class="weather-footer">
+                <div>Wind: {{ weather.wind_speed }} m/s</div>
+                <div>Pressure: {{ weather.pressure }} hPa</div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
