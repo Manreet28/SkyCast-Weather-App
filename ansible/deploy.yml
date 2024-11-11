@@ -1,0 +1,68 @@
+---
+- name: Deploy SkyCast Weather App on AWS
+  hosts: web_servers
+  become: true
+  vars:
+    app_directory: /home/ubuntu/skycast
+    repo_url: https://github.com/Manreet28/SkyCast-Weather-App.git
+    port: 5000
+
+  tasks:
+
+  - name: Update and install dependencies
+    apt:
+      update_cache: yes
+      name: "{{ item }}"
+      state: present
+    loop:
+      - python3
+      - python3-pip
+      - git
+
+  - name: Clone SkyCast Weather App repository
+    git:
+      repo: "{{ repo_url }}"
+      dest: "{{ app_directory }}"
+      update: yes
+
+  - name: Install Python virtualenv
+    pip:
+      name: virtualenv
+
+  - name: Create virtual environment for SkyCast
+    command: python3 -m venv {{ app_directory }}/venv
+    args:
+      creates: "{{ app_directory }}/venv"
+
+  - name: Install required Python packages
+    pip:
+      requirements: "{{ app_directory }}/requirements.txt"
+      virtualenv: "{{ app_directory }}/venv"
+
+  - name: Configure environment file with API key
+    copy:
+      dest: "{{ app_directory }}/.env"
+      content: |
+        API_KEY=your_openweathermap_api_key  # Replace with actual key
+
+  - name: Set up Gunicorn service for SkyCast
+    copy:
+      dest: /etc/systemd/system/skycast.service
+      content: |
+        [Unit]
+        Description=SkyCast Weather App Gunicorn Service
+        After=network.target
+
+        [Service]
+        User=ubuntu
+        WorkingDirectory={{ app_directory }}
+        ExecStart={{ app_directory }}/venv/bin/gunicorn -b 0.0.0.0:{{ port }} app:app
+
+        [Install]
+        WantedBy=multi-user.target
+
+  - name: Start and enable Gunicorn service
+    systemd:
+      name: skycast
+      enabled: yes
+      state: started
