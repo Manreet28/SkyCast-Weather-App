@@ -43,7 +43,7 @@
     copy:
       dest: "{{ app_directory }}/.env"
       content: |
-        API_KEY=your_openweathermap_api_key  # Replace with actual key
+        WEATHER_API_KEY=b7b7737cef72f3057a5a95cfde0c9823 # Replace with actual key
 
   - name: Set up Gunicorn service for SkyCast
     copy:
